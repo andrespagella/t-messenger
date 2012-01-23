@@ -1,0 +1,181 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="es-ES">
+	<head profile="http://gmpg.org/xfn/11">
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+		<title>T-Messenger</title>
+		<link rel="stylesheet" href="app:/css/common.css" type="text/css" media="screen" title="no title" charset="utf-8">
+		<link rel="stylesheet" href="app:/css/custom.css" type="text/css" media="screen" title="no title" charset="utf-8">
+		<script type="text/javascript" src="app:/js/air/AIRAliases.js"></script>
+		
+		<!-- UTILITIES -->
+		<script type="text/javascript" src="app:/js/util/base64.js" charset="utf-8"></script>
+		<script type="text/javascript" src="app:/js/util/jquery.js" charset="utf-8"></script>
+		<script type="text/javascript" src="app:/js/util/jquery.intercept-min.js"></script>
+		<script type="text/javascript" src="app:/js/util/json.js" charset="utf-8"></script>
+		<script type="text/javascript" src="app:/js/util/jquery.livequery.js"></script>
+		<script type="text/javascript" src="app:/js/util/jquery.selectboxes.pack.js"></script>
+		<!-- /UTILITIES -->
+		
+		<!-- HELPERS -->
+		<script type="text/javascript" src="app:/js/tmsngr/config.js" charset="utf-8"></script>
+		<script type="text/javascript" src="app:/js/tmsngr/listeners.js" charset="utf-8"></script>
+		<script type="text/javascript" src="app:/js/tmsngr/locale.js" charset="utf-8"></script>
+		<script type="text/javascript" src="app:/js/tmsngr/services.js" charset="utf-8"></script>
+		<script type="text/javascript" src="app:/js/tmsngr/strings.js" charset="utf-8"></script>
+		<script type="text/javascript" src="app:/js/tmsngr/date.js" charset="utf-8"></script>
+		<script type="text/javascript" src="app:/js/tmsngr/parser.js" charset="utf-8"></script>
+		<script type="text/javascript" src="app:/js/tmsngr/db.js" charset="utf-8"></script>
+		<!-- /HELPERS -->
+		
+		<!-- CORE -->
+		<script type="text/javascript" src="app:/js/tmsngr/core/main.js" charset="utf-8"></script>
+		<script type="text/javascript" src="app:/js/tmsngr/core/callback.js" charset="utf-8"></script>
+		<script type="text/javascript" src="app:/js/tmsngr/core/ajax.js" charset="utf-8"></script>
+		<script type="text/javascript" src="app:/js/tmsngr/core/display.js" charset="utf-8"></script>
+		<script type="text/javascript" src="app:/js/tmsngr/core/open.js" charset="utf-8"></script>
+		<script type="text/javascript" src="app:/js/tmsngr/core/sound.js" charset="utf-8"></script>
+		<!-- / CORE -->
+		
+		<script type="text/javascript">
+			var CURRENT_TAB = 1;
+			var CURRENT_FRIENDS_PAGE = 1;
+			var CURRENT_FOLLOWERS_PAGE = 1;
+			var CURRENT_TWEET_PAGE = 1;
+			var CURRENT_MENTIONS_PAGE = 1;
+			var CURRENT_GROUP_SELECTION = 0;
+			var FIRST_OPEN = true;
+
+			$(document).ready(function() {			
+				TM.core.init();
+				
+				TM.listener.keyboard(); // Start listening for keyb events
+				TM.listener.dragndrop(); // Start listening for drags and drops events
+				TM.listener.mouse(); // Start listening for mouse events
+			});
+		</script>
+	</head>
+	<body>
+		<div id="logoBar">
+			<div class="fll" style="width: 150px">
+				<img src="app:/img/logo.png" alt="T-Messenger" />
+			</div>
+			<div class="flr tar pt3" style="width: 200px">
+				<img src="app:/img/btn-refresh.png" id="btnRefresh" class="button" alt="Refresh" /> &nbsp; 
+				<img src="app:/img/btn-settings.png" id="btnSettings" class="button" alt="Settings" /> &nbsp; 
+				<img src="app:/img/loader-static.png" id="loader" alt="" /> &nbsp;
+				<img src="app:/img/btnMinimizeapp.png" class="button" id="btnMinimizeApp" alt="" /> 
+				<img src="app:/img/btnCloseapp.png" class="button" id="btnCloseApp" alt="" />
+			</div>
+			<div class="clb"></div>
+		</div>
+		<div class="pr">
+			<div id="shortBar">
+				<div class="fll tabBtn active" id="btntab1" style="width: 85px;"><p>Contact List</p></div>
+				<div class="fll tabBtn" id="btntab2" style="width: 65px;"><p>Timeline</p></div>
+				<div class="fll tabBtn" id="btntab3" style="width: 65px;"><p>Mentions</p></div>
+				<!-- div class="fll tabBtn" id="btntab4" style="width: 65px;"><p>Searches</p></div -->
+				<div class="clb" style="height: 0px"></div>
+			</div>
+			<div class="toolbar_options">
+				<div class="optionset" id="opt1">
+					<ul>
+						<li>
+							<div class="button3 fll new-group-button" style="width: 80px">New Group</div>
+						</li>
+					</ul>
+					<div class="clb"></div>
+				</div>
+				<div class="optionset dn" id="opt2">
+					<ul>
+						<li class="newtweet">
+							<div class="button3 fll" style="width: 80px">New Tweet</div>
+						</li>
+					</ul>
+					<div class="clb"></div>
+				</div>
+				<div class="optionset dn" id="opt3">
+					<ul>
+						<li class="">
+							<div class="button3 fll" style="width: 90px">New Search</div>
+						</li>
+					</ul>
+					<div class="clb"></div>
+				</div>
+			</div>
+		</div>
+		<div class="textingArea dn" style="height: 110px">
+			<div>
+				<div class="fll type mb3 s12 pb5 b" style="width: 150px">What are you doing?</div>
+				<div class="flr tar mb3" style="width: 30px"><img class="close button" src="app:/img/btnClose.png" /></div>
+				<div class="clb"></div>
+			</div>
+			<textarea class="inptText" id="twtText" name="twtText"></textarea>
+			<div class="tar">
+				<table style="width: 100%">
+					<tr>
+						<td style="width: 230px" class="pt3" valign="top">
+							<p class="s11 pt7" style="color: black"><span id="charsleft" style="color: black" class="s11 b">140</span> characters left.</p>
+						</td>
+						<td class="tar type b pt3" valign="top">
+							<div class="button3 sendtweet flr" style="width: 90px">Send Tweet</div>
+							<!-- div class="button3 insertImg flr" style="width: 90px">Insert Image</div -->
+							<div class="clb"></div>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div class="bodyContent2">
+			<div id="main">
+				<div id="tab1" class="tab">
+					<div class="p15" id="tab1_options" style="color: white; padding-bottom: 0px">
+						<ul>
+							<li id="showFriends" class="active"><span>Friends <span class="num_friends tab1_qty">0</span></span></li>
+							<li id="showFollowers"><span>Followers <span class="num_followers tab1_qty">0</span></span></li>
+							<li id="showGroups"><span>Groups <span class="num_groups tab1_qty">0</span></span></li>
+						</ul>
+					</div>
+					<div class="contact">
+						<div class="tac s11" style="color: black">Loading friends/followers data, please wait...</div>
+					</div>
+				</div>
+				<div id="tab2" class="tab dn">
+					<div class="p20 pb1">
+						<select id="group_filter" style="width: 100%; background-color: white">
+						</select>
+					</div>
+					<div class="tweetlist pb10">
+						<div class="tac s11" style="color: black">Loading data, please wait...</div>
+					</div>
+				</div>
+				<div id="tab3" class="tab dn">
+					<div class="mentions pb10">
+						<div class="tac s11" style="color: black">Loading data, please wait...</div>
+					</div>
+				</div>
+				<div id="tab4" class="tab dn">
+					<div class="searches">
+				
+					</div>
+				</div>
+			</div>
+		</div>		
+		<div id="statusBar">
+			<div class="fll tal" style="width: 350px">
+				<p class="type s10 tal pt3 pl5" id="rate_ok">
+					Twitter API Requests left: <span id="api_calls_left" class="s10" style="color: black">0</span>/<span id="api_calls_limit" class="s10" style="color: black">0</span>, refreshes every 60 minutes.
+				</p>
+				<p class="type s10 tal pt3 pl5 dn" id="rate_error" style="color: #CC0000">
+					<strong>No API calls Left</strong>. T-Messenger will display a cache of your tweets.
+				<p>
+			</div>
+			<div class="flr tar" style="width: 30px">
+				<img src="app:/img/btnResize.png" class="mr1" id="btnResizeapp" />
+			</div>
+			<div class="clb"></div>
+		</div>
+		<!-- <div class="shadow pa" style="top: 248px; height: 10px; width: 100%"></div> -->
+		<div class="shadow pa" id="shadow" style="top: 98px; height: 10px; width: 100%"></div>
+	</body>
+</html>

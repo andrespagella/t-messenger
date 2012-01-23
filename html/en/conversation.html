@@ -1,0 +1,130 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="es-ES">
+	<head profile="http://gmpg.org/xfn/11">
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+		<title>T-Messenger</title>
+		<link rel="stylesheet" href="app:/css/common.css" type="text/css" media="screen" title="no title" charset="utf-8">
+		<link rel="stylesheet" href="app:/css/custom.css" type="text/css" media="screen" title="no title" charset="utf-8">
+		<script type="text/javascript" src="app:/js/air/AIRAliases.js"></script>
+		
+		<!-- UTILITIES -->
+		<script type="text/javascript" src="app:/js/util/base64.js" charset="utf-8"></script>
+		<script type="text/javascript" src="app:/js/util/jquery.js" charset="utf-8"></script>
+		<script type="text/javascript" src="app:/js/util/jquery.intercept-min.js"></script>
+		<script type="text/javascript" src="app:/js/util/json.js" charset="utf-8"></script>
+		<script type="text/javascript" src="app:/js/util/jquery.livequery.js"></script>
+		<script type="text/javascript" src="app:/js/util/jquery.selectboxes.pack.js"></script>
+		<!-- /UTILITIES -->
+		
+		<!-- HELPERS -->
+		<script type="text/javascript" src="app:/js/tmsngr/config.js" charset="utf-8"></script>
+		<script type="text/javascript" src="app:/js/tmsngr/listeners.js" charset="utf-8"></script>
+		<script type="text/javascript" src="app:/js/tmsngr/locale.js" charset="utf-8"></script>
+		<script type="text/javascript" src="app:/js/tmsngr/services.js" charset="utf-8"></script>
+		<script type="text/javascript" src="app:/js/tmsngr/strings.js" charset="utf-8"></script>
+		<script type="text/javascript" src="app:/js/tmsngr/date.js" charset="utf-8"></script>
+		<script type="text/javascript" src="app:/js/tmsngr/parser.js" charset="utf-8"></script>
+		<script type="text/javascript" src="app:/js/tmsngr/db.js" charset="utf-8"></script>
+		<!-- /HELPERS -->
+		
+		<!-- CORE -->
+		<script type="text/javascript" src="app:/js/tmsngr/core/main.js" charset="utf-8"></script>
+		<script type="text/javascript" src="app:/js/tmsngr/core/callback.js" charset="utf-8"></script>
+		<script type="text/javascript" src="app:/js/tmsngr/core/ajax.js" charset="utf-8"></script>
+		<script type="text/javascript" src="app:/js/tmsngr/core/display.js" charset="utf-8"></script>
+		<script type="text/javascript" src="app:/js/tmsngr/core/open.js" charset="utf-8"></script>
+		<script type="text/javascript" src="app:/js/tmsngr/core/sound.js" charset="utf-8"></script>
+		<!-- / CORE -->
+		
+		<script type="text/javascript">
+			var IS_CONVERSATION_WINDOW = true;
+		
+			function refreshContent()
+			{
+				$('#im_body').html('');
+				TM.core.display.initIM(TM.string.gup('screen_name'));
+				
+				// Scroll to the bottom
+				$(".bodyContent").attr({ scrollTop: $(".bodyContent").attr("scrollHeight") });
+				
+				setTimeout(function() { refreshContent(); }, 5000);
+			}
+		
+			$(document).ready(function() {				
+				$.ajaxSetup({
+					timeout: 1000 * TM.core.ajax.parameters.timeout, // 20 second timeout
+					async: TM.core.ajax.parameters.async,
+					cache: TM.core.ajax.parameters.cache
+				});
+				
+				// Handle the start of AJAX requests
+				$('body').ajaxStart(function() {
+					TM.core.ajax.start('loader');
+				});
+
+				// Handle the end of AJAX requests
+				$('body').ajaxComplete(function() {
+					TM.core.ajax.end('loader');
+				});
+				
+				TM.settings.load();
+				TM.db.init();
+				
+				document.title = 'T-Messenger: ' + TM.locale[TM.settings.current.locale]['chatting-with'] + ' @' + TM.string.gup('screen_name');
+				
+				TM.listener.keyboard(); // Start listening for keyb events
+				TM.listener.dragndrop(); // Start listening for drags and drops events
+				TM.listener.mouse(); // Start listening for mouse events
+				
+				$('body').keyup(function(e) {
+					// Si apreto ESC en la ventana de conversacion, cierro la ventana.
+					if (e.which == 27) {
+						window.nativeWindow.close();
+					}
+				});
+				
+				refreshContent();
+			});
+		</script>
+	</head>
+	<body>
+		<input type="hidden" id="twitterUser" />
+		<input type="hidden" id="lastStatus" value="0" />
+		<div id="logoBar" style="-webkit-border-radius: 0px">
+			<div class="fll" style="width: 150px">
+				<img src="app:/img/logo.png" alt="T-Messenger" />
+			</div>
+			<div class="flr tar pt3" style="width: 200px">
+				<img src="app:/img/loader-static.png" id="loader" alt="" />
+			</div>
+			<div class="clb"></div>
+		</div>
+		<div class="bodyContent" style="bottom: 130px">
+			<div id="im_body" class="p20"></div>
+		</div>
+		<div id="tweetBar">
+			<div class="textingArea2" style="border-top: 1px solid #CCC">
+				<div>
+					<div class="type mb3 s12 p5 b">Chat with @<span id="nickname" class="type s12" style="color: black"></span></div>
+				</div>
+				<textarea class="inptText" id="twtText" name="twtText"></textarea>
+				<div class="tar">
+					<table style="width: 100%">
+						<tr>
+							<td style="width: 230px" class="pt3" valign="top">
+								<p class="s11 pt3" style="color: black"><span id="charsleft" style="color: black" class="s11 b">140</span> characters left.</p>
+							</td>
+							<td class="tar type b pt3" valign="top">
+								<div class="button3 sendtweet flr" style="width: 50px">Send</div>
+								<!-- div class="button3 insertImg flr" style="width: 90px">Insert Image</div -->
+								<div class="clb"></div>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="shadow pa" style="top: 30px; height: 10px; width: 100%"></div>
+	</body>
+</html>

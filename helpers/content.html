@@ -1,0 +1,19 @@
+<div id="containerBox" class="p10">
+	<div class="p10">
+		<h3>Crear nuevo contenido</h3>
+	</div>
+	<script type="text/javascript">
+
+	// Automatically calculates the editor base path based on the _samples directory.
+	// This is usefull only for these samples. A real application should use something like this:
+	//var sBasePath = document.location.href.substring(0,document.location.href.lastIndexOf('_samples')) ;
+	
+	var oFCKeditor = new FCKeditor( 'FCKeditor1' ) ;
+	//oFCKeditor.BasePath	= sBasePath ;
+	oFCKeditor.BasePath = '/fckeditor/' ;	// '/fckeditor/' is the default value.
+	oFCKeditor.Height	= 400 ;
+	oFCKeditor.Value	= '<p>FCKeditor is in the <strong>AIR</strong>!</p>' ;
+	oFCKeditor.Create() ;
+
+	</script>
+</div>

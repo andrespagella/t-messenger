@@ -1,0 +1,209 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="es-ES">
+	<head profile="http://gmpg.org/xfn/11">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>T-Messenger Settings</title>
+		<link rel="stylesheet" href="../../css/common.css" type="text/css" media="screen" title="no title" charset="utf-8">
+		<link rel="stylesheet" href="../../css/custom.css" type="text/css" media="screen" title="no title" charset="utf-8">
+		<script type="text/javascript" src="../../js/air/AIRAliases.js"></script>
+		
+		<!-- UTILITIES -->
+		<script type="text/javascript" src="../../js/util/base64.js" charset="utf-8"></script>
+		<script type="text/javascript" src="../../js/util/jquery.js" charset="utf-8"></script>
+		<script type="text/javascript" src="../../js/util/jquery.intercept-min.js"></script>
+		<script type="text/javascript" src="../../js/util/json.js" charset="utf-8"></script>
+		<!-- /UTILITIES -->
+		
+		<!-- HELPERS -->
+		<script type="text/javascript" src="../../js/tmsngr/config.js" charset="utf-8"></script>
+		<script type="text/javascript" src="../../js/tmsngr/listeners.js" charset="utf-8"></script>
+		<script type="text/javascript" src="../../js/tmsngr/locale.js" charset="utf-8"></script>
+		<script type="text/javascript" src="../../js/tmsngr/services.js" charset="utf-8"></script>
+		<script type="text/javascript" src="../../js/tmsngr/strings.js" charset="utf-8"></script>
+		<script type="text/javascript" src="../../js/tmsngr/date.js" charset="utf-8"></script>
+		<script type="text/javascript" src="../../js/tmsngr/parser.js" charset="utf-8"></script>
+		<script type="text/javascript" src="../../js/tmsngr/db.js" charset="utf-8"></script>
+		<!-- /HELPERS -->
+		
+		<!-- CORE -->
+		<script type="text/javascript" src="../../js/tmsngr/core/main.js" charset="utf-8"></script>
+		<script type="text/javascript" src="../../js/tmsngr/core/callback.js" charset="utf-8"></script>
+		<script type="text/javascript" src="../../js/tmsngr/core/ajax.js" charset="utf-8"></script>
+		<script type="text/javascript" src="../../js/tmsngr/core/display.js" charset="utf-8"></script>
+		<script type="text/javascript" src="../../js/tmsngr/core/open.js" charset="utf-8"></script>
+		<!-- / CORE -->
+		
+		<script type="text/javascript">
+			$(document).ready(function() {
+				window.nativeWindow.activate(); // Get focus
+				window.nativeWindow.alwaysInFront = true;
+				
+				TM.settings.load();
+				
+				$('body').keyup(function(e) {
+					// Si apreto ESC cierro la ventana.
+					if (e.which == 27) {
+						window.nativeWindow.close();
+					}
+				});
+				
+				// Controlo que los valores ingresados a los campos sean numericos
+				$('.fValue').keydown(function(e) {
+					if ((e.which < 48 || 
+						e.which > 57) &&
+						e.which != 46 && // Delete
+						e.which != 8 && // Backspace
+						e.which != 9 && // TAB
+						e.which != 37 && // Flecha izq
+						e.which != 39) { // Flecha der
+							return false;
+					}
+				});
+				
+				$('.fValue').blur(function() {
+					if ($('#refreshTime').val() < 20) {
+						$('#refreshTime').val(20);
+					}
+				});
+				
+				$('#cancel').click(function() {
+					window.nativeWindow.close();
+				});
+				
+				$('#reset').click(function() {
+					if (confirm('Are you sure that you want to reset T-Messenger\'s account information?\n\nWARNING: There is no UNDO for this action!')) {
+						if (TM.settings.reset()) {
+							window.nativeWindow.close();
+						}
+					}
+				});
+				
+				// Save settings
+				$('#save').click(function() {
+					var enableSounds = true;
+					var mentions = true;
+					
+					enableSounds = ($("#sound").val() == 0) ? true : false;
+					mentions = ($("#mentions").val() == 0) ? true : false;
+					
+					if (TM.settings.current['locale'] != $('#language').val()) {
+						alert('You need to restart the application for the language changes to take effect');
+					}
+					
+					TM.settings.current['enableSounds'] = enableSounds;
+					TM.settings.current['openRepliesNewWindow'] = mentions;
+					TM.settings.current['tweetCount'] = $('#repliesCount').val();
+					TM.settings.current['mentionsCount'] = $('#mentionsCount').val();
+					TM.settings.current['refreshTime'] = $('#refreshTime').val();
+					TM.settings.current['locale'] = $('#language').val();
+					
+					try {
+						TM.settings.save(TM.settings.current.username, TM.settings.current.password, TM.settings.current);
+					} catch(e) {
+						alert('ERROR SAVING SETTINGS: ' + e);
+					}
+					
+					window.nativeWindow.close();
+				});
+							
+				// Load the current configuration
+				if (TM.settings.current['enableSounds']) {
+					$("#sound").val(0);
+				} else {
+					$("#sound").val(1);
+				}
+				
+				$("#language").val(TM.settings.current.locale);
+				
+				if (TM.settings.current['openRepliesNewWindow']) {
+					$("#mentions").val(0);
+				} else {
+					$("#mentions").val(1);
+				}
+				$('#repliesCount').val(TM.settings.current['tweetCount']);
+				$('#mentionsCount').val(TM.settings.current['mentionsCount']);
+				$('#refreshTime').val(TM.settings.current['refreshTime']);
+			});
+		</script>
+	</head>
+	<body>
+		<div class="p10" style="background-color: #F2F2F2; height: 100%">
+			<div id="settings_page">
+				<table>
+					<tr>
+						<td style="width: 200px">
+							<span class="title">Language</span><br />
+							<span class="description">Select in which language do you want to use the application</span>
+						</td>
+						<td>
+							<select id="language">
+								<option value="en">English</option>
+								<option value="es">Español</option>
+								<option value="pr">Português</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 200px">
+							<span class="title">Mentions</span><br />
+							<span class="description">What should happen when someone mentions your name</span>
+						</td>
+						<td>
+							<select id="mentions">
+								<option value="0">Open a New Conversation</option>
+								<option value="1">Do Nothing</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 200px">
+							<span class="title">Sounds</span><br />
+							<span class="description">Play a sound when your friends create a new update or when someone mentions your name</span>
+						</td>
+						<td>
+							<select id="sound">
+								<option value="0">Enabled</option>
+								<option value="1">Disabled</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 200px">
+							<span class="title">Tweet Count</span><br />
+							<span class="description">How many tweets do you want to see?</span>
+						</td>
+						<td>
+							<input type="text" id="repliesCount" class="fValue" style="width: 30px" />
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 200px">
+							<span class="title">Mentions Count</span><br />
+							<span class="description">How many mentions do you want to see?</span>
+						</td>
+						<td>
+							<input type="text" id="mentionsCount" class="fValue" style="width: 30px" />
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 200px">
+							<span class="title">Refresh Interval</span><br />
+							<span class="description">Every how many seconds do you want to check for new updates or mentions? (Min. 20 secs.)</span>
+						</td>
+						<td>
+							<input type="text" id="refreshTime" class="fValue" style="width: 30px" />
+						</td>
+					</tr>
+				</table>
+				<div class="pt5">
+					<div class="button3 fll" id="reset" style="width: 120px; border: 1px solid #8F0307; background-color: #CC0000; background-image: none; color: white">Reset T-Messenger</div>
+					
+					<div class="button3 flr" id="cancel" style="width: 80px">Cancel</div>
+					<div class="button3 flr" id="save" style="width: 100px">Save & Apply</div>
+					<div class="clb"></div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

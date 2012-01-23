@@ -1,0 +1,8 @@
+T-Messenger was a very easy to use twitter client that emulated some instant messaging capabilities. Based on the Adobe AIR Framework it did things that, even nowadays, most Twitter clients don't do. It has basic support for groups, IM, supports 3 languages (English, Spanish and Portuguese), tweet caching, drag and drop image uploads, multi-line tweets, automatic URL shortening and many more features.
+
+The software has been featured in the Adobe Marketplace here: http://www.adobe.com/cfusion/marketplace/index.cfm?event=marketplace.offering&offeringID=14860
+And also in Softpedia: http://mac.softpedia.com/progScreenshots/T-Messenger-Screenshot-70088.html
+
+As well as in many other sites.
+
+Small catch: As twitter has phased-out support for basic HTTP auth, the client won't work unless someone implements a decent OAuth solution. I was halfway there, but i had to abandon it for lack of time.

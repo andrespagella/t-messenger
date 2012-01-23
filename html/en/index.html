@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="es-ES">
+	<head profile="http://gmpg.org/xfn/11">
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+		<title>T-Messenger</title>
+		<link rel="stylesheet" href="app:/css/common.css" type="text/css" media="screen" title="no title" charset="utf-8">
+		<link rel="stylesheet" href="app:/css/custom.css" type="text/css" media="screen" title="no title" charset="utf-8">
+		<script type="text/javascript" src="app:/js/air/AIRAliases.js"></script>
+		
+		<!-- UTILITIES -->
+		<script type="text/javascript" src="app:/js/util/base64.js" charset="utf-8"></script>
+		<script type="text/javascript" src="app:/js/util/jquery.js" charset="utf-8"></script>
+		<script type="text/javascript" src="app:/js/util/jquery.intercept-min.js"></script>
+		<script type="text/javascript" src="app:/js/util/json.js" charset="utf-8"></script>
+		<script type="text/javascript" src="app:/js/util/jquery.livequery.js"></script>
+		<script type="text/javascript" src="app:/js/util/jquery.selectboxes.pack.js"></script>
+		<!-- /UTILITIES -->
+		
+		<!-- HELPERS -->
+		<script type="text/javascript" src="app:/js/tmsngr/config.js" charset="utf-8"></script>
+		<script type="text/javascript" src="app:/js/tmsngr/listeners.js" charset="utf-8"></script>
+		<script type="text/javascript" src="app:/js/tmsngr/locale.js" charset="utf-8"></script>
+		<script type="text/javascript" src="app:/js/tmsngr/services.js" charset="utf-8"></script>
+		<script type="text/javascript" src="app:/js/tmsngr/strings.js" charset="utf-8"></script>
+		<script type="text/javascript" src="app:/js/tmsngr/date.js" charset="utf-8"></script>
+		<script type="text/javascript" src="app:/js/tmsngr/parser.js" charset="utf-8"></script>
+		<script type="text/javascript" src="app:/js/tmsngr/db.js" charset="utf-8"></script>
+		<!-- /HELPERS -->
+		
+		<!-- CORE -->
+		<script type="text/javascript" src="app:/js/tmsngr/core/main.js" charset="utf-8"></script>
+		<script type="text/javascript" src="app:/js/tmsngr/core/callback.js" charset="utf-8"></script>
+		<script type="text/javascript" src="app:/js/tmsngr/core/ajax.js" charset="utf-8"></script>
+		<script type="text/javascript" src="app:/js/tmsngr/core/display.js" charset="utf-8"></script>
+		<script type="text/javascript" src="app:/js/tmsngr/core/open.js" charset="utf-8"></script>
+		<script type="text/javascript" src="app:/js/tmsngr/core/sound.js" charset="utf-8"></script>
+		<!-- / CORE -->
+		
+		<script type="text/javascript">
+			$(document).ready(function() {
+				if (TM.settings.load()) {
+					window.location = 'app:/html/' + TM.settings.current.locale + '/main.html';
+				}
+				
+				TM.core.init();
+				
+				TM.listener.mouse(); // Start listening for mouse events
+				
+				$('#btnInitSesion').click(function() {
+					TM.core.login();
+				});
+				
+				$('input').keyup(function(e) {
+					if (e.which == 13) {
+						TM.core.login();
+					}
+				});
+			});
+		</script>
+				
+	</head>
+	<body>
+		<div id="logoBar">
+			<div class="fll" style="width: 150px">
+				<img src="app:/img/logo.png" alt="T-Messenger" />
+			</div>
+			<div class="flr tar pt3" style="width: 200px">
+				<img src="app:/img/loader-static.png" id="loader" alt="" /> &nbsp;
+				<img src="app:/img/btnMinimizeapp.png" class="button" id="btnMinimizeApp" alt="" /> 
+				<img src="app:/img/btnCloseapp.png" class="button" id="btnCloseApp" alt="" />
+			</div>
+			<div class="clb"></div>
+		</div>
+		<div class="bodyContent">
+			<div class="shadow" style="height: 10px"></div>
+			<div id="tweetBar" style="background-color: white; width: 300px; border: 1px solid #CCC; margin-top: 10px; -webkit-border-radius: 5px;" class="marginCenter">
+				<div class="type tac pt20 s11">
+					<img src="app:/img/logo-big.png" />
+				</div>
+				<div class="marginCenter pt10 type" style="width: 200px">
+					<strong>Username:</strong><br />
+					<input type="text" name="usuario" id="usuario" style="width: 200px" />
+				</div>
+				<div class="marginCenter pt10 type" style="width: 200px">
+					<strong>Password:</strong><br />
+					<input type="password" name="passwd" id="passwd" style="width: 200px" />
+				</div>
+				<div class="marginCenter tac pt10" style="width: 200px">
+					<div id="btnInitSesion" class="button2 marginCenter" style="width: 80px;">
+						<strong>Start Session</strong>
+					</div>
+				</div>
+				<p class="s11 pt10 tac b dn type" id="errorMsg" style="color: #CC0000">
+					Error
+				</p>
+				<p class="s11 tac pt20 type">
+					<a href="https://twitter.com/signup" style="color: #2B5295" class="s11 type tdu url_link">Click here to register a new account in Twitter</a>
+					<br /><br />
+					Version: 0.34 BETA
+				</p>
+				<br /><br />
+			</div>
+			<br />
+		</div>
+		<div id="statusBar">
+			<img src="app:/img/btnResize.png" class="mr1" id="btnResizeapp" />
+		</div>
+	</body>
+</html>

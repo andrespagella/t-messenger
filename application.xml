@@ -1,0 +1,27 @@
+<application xmlns="http://ns.adobe.com/air/application/1.0">
+  <id>com.t-messenger.client</id>
+  <version>0.34</version>
+  <copyright>Andres Pagella (andres.pagella@gmail.com)</copyright>
+  <filename>T-Messenger</filename>
+  <name>T-Messenger</name> 
+  <description>A simple yet powerful Instant Messaging client based on the Twitter service.</description> 
+  <initialWindow>
+	<title>T-Messenger</title>
+    <content>index.html</content>
+    <visible>true</visible>
+    <width>470</width>
+    <height>430</height>
+	<minSize>470 430</minSize>
+	<systemChrome>none</systemChrome>
+	<transparent>true</transparent>
+	<minimizable>true</minimizable>
+	<maximizable>true</maximizable>
+	<resizable>true</resizable>
+  </initialWindow>
+  <icon>
+    <image16x16>icons/tmsngr-16.png</image16x16>
+    <image32x32>icons/tmsngr-32.png</image32x32>
+    <image48x48>icons/tmsngr-48.png</image48x48>
+    <image128x128>icons/tmsngr-128.png</image128x128>
+  </icon>
+</application>

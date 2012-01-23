@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="es-ES">
+	<head profile="http://gmpg.org/xfn/11">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>Administración de Grupos</title>
+		<link rel="stylesheet" href="../../css/common.css" type="text/css" media="screen" title="no title" charset="utf-8">
+		<link rel="stylesheet" href="../../css/custom.css" type="text/css" media="screen" title="no title" charset="utf-8">
+		<script type="text/javascript" src="../../js/air/AIRAliases.js"></script>
+		
+		<!-- UTILITIES -->
+		<script type="text/javascript" src="../../js/util/base64.js" charset="utf-8"></script>
+		<script type="text/javascript" src="../../js/util/jquery.js" charset="utf-8"></script>
+		<script type="text/javascript" src="../../js/util/jquery.livequery.js"></script>
+		<script type="text/javascript" src="../../js/util/json.js" charset="utf-8"></script>
+		<!-- /UTILITIES -->
+		
+		<!-- HELPERS -->
+		<script type="text/javascript" src="../../js/tmsngr/config.js" charset="utf-8"></script>
+		<script type="text/javascript" src="../../js/tmsngr/listeners.js" charset="utf-8"></script>
+		<script type="text/javascript" src="../../js/tmsngr/locale.js" charset="utf-8"></script>
+		<script type="text/javascript" src="../../js/tmsngr/services.js" charset="utf-8"></script>
+		<script type="text/javascript" src="../../js/tmsngr/strings.js" charset="utf-8"></script>
+		<script type="text/javascript" src="../../js/tmsngr/date.js" charset="utf-8"></script>
+		<script type="text/javascript" src="../../js/tmsngr/parser.js" charset="utf-8"></script>
+		<script type="text/javascript" src="../../js/tmsngr/db.js" charset="utf-8"></script>
+		<!-- /HELPERS -->
+		
+		<!-- CORE -->
+		<script type="text/javascript" src="../../js/tmsngr/core/main.js" charset="utf-8"></script>
+		<script type="text/javascript" src="../../js/tmsngr/core/callback.js" charset="utf-8"></script>
+		<script type="text/javascript" src="../../js/tmsngr/core/ajax.js" charset="utf-8"></script>
+		<script type="text/javascript" src="../../js/tmsngr/core/display.js" charset="utf-8"></script>
+		<script type="text/javascript" src="../../js/tmsngr/core/open.js" charset="utf-8"></script>
+		<!-- / CORE -->
+		
+		<script type="text/javascript">
+			var arrContacts = new Array();
+		
+			$(document).ready(function() {
+				window.nativeWindow.activate(); // Get focus
+				window.nativeWindow.alwaysInFront = true;
+				
+				TM.settings.load();
+				
+				$('body').keyup(function(e) {
+					// Si apreto ESC cierro la ventana.
+					if (e.which == 27) {
+						window.nativeWindow.close();
+					}
+				});
+				
+				$('#cancel').click(function() {
+					window.nativeWindow.close();
+				});
+				
+				// Create group
+				$('#save').click(function() {
+					if ($('#name').val().length == 0) {
+						alert('Debe elegir un nombre para este grupo');
+					} else if (arrContacts.length == 0) {
+						alert('Debe asociar al menos un contacto a este grupo');
+					} else {
+						if (TM.db.groups.set($('#name').val())) {
+							var groupInfo = TM.db.groups.get($('#name').val());
+							var groupId = groupInfo[0].idx;
+							
+							for (i = 0; i < arrContacts.length; i++) {
+								TM.db.groups.contacts.set(groupId, arrContacts[i]);
+							}
+							
+							alert('El grupo ha sido creado exitosamente');
+							window.nativeWindow.close();
+						} else {
+							alert('Ocurrió un error al intentar crear el nuevo grupo');
+						}
+					}
+				});
+				
+				$('.contact').livequery('dblclick', function() { return false; });
+				
+				$('.contact').livequery('click', function() {
+					if ($(this).hasClass('selected')) {
+						arrContacts.splice(arrContacts.indexOf($(this).attr('id').substr(2)), 1);
+						
+						$(this).removeClass('selected');
+					} else {
+						arrContacts.push($(this).attr('id').substr(2));
+						
+						$(this).addClass('selected');
+					}
+				});
+
+				try {
+					TM.db.init();
+					
+					// Get all contacts
+					var friendData = TM.db.contacts.all(true);
+				
+					for (i = 0; i < friendData.length; i++) {
+						try {
+							var name = TM.db.SQLUnEscape(friendData[i].real_name);
+							var profile_image_url = TM.db.SQLUnEscape(friendData[i].profile_image_url);
+							var screen_name = friendData[i].screen_name;
+
+							htmlFinal = '<div style="border-bottom: 1px solid #CCC" class="p5 contact" id="id' + friendData[i].contactid + '">';
+							htmlFinal += '<table width="100%"><tr>';
+							htmlFinal += '<td width="30" valign="top"><img src="' + profile_image_url + '" style="width: 25px; height: 25px" /></td>';
+							htmlFinal += '<td valign="middle"><span class="description">' + name + ' (@' + screen_name + ')</span></td>';
+							htmlFinal += '</tr></table>';
+							htmlFinal += '</div>';
+
+							$('#contactBox').append(htmlFinal);
+						} catch(e) { }
+					}
+				} catch(e) { } // The guy doesn't have any friends (loooooseeer!) or something went terribly wrong (d'oh!). 
+			});
+		</script>
+	</head>
+	<body>
+		<div class="p10" style="background-color: #F2F2F2;">
+			<div id="groups_page">
+				<table>
+					<tr>
+						<td style="width: 200px">
+							<span class="title">Nombre del Grupo</span><br />
+							<span class="description">Como quiere llamar a este grupo?</span>
+						</td>
+						<td>
+							<input type="text" id="name" style="width: 150px" />
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<hr />
+							<span class="title">Elija que contactos desea asociar con este grupo:</span><br />
+							<div id="contactBox" style="background-color: white; height: 300px; width: 100%; border: 1px solid #CCC; overflow: auto">
+							</div>
+						</td>
+					</tr>
+				</table>
+				<div class="pt5">
+					<div class="button3 flr" id="cancel" style="width: 80px">Cancelar</div>
+					<div class="button3 flr" id="save" style="width: 100px">Guardar Grupo</div>
+					<div class="clb"></div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="es-ES">
+	<head profile="http://gmpg.org/xfn/11">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>T-Messenger</title>
+		<link rel="stylesheet" href="app:/css/common.css" type="text/css" media="screen" title="no title" charset="utf-8">
+		<link rel="stylesheet" href="app:/css/custom.css" type="text/css" media="screen" title="no title" charset="utf-8">
+		<script type="text/javascript" src="app:/js/air/AIRAliases.js"></script>
+		
+		<!-- UTILITIES -->
+		<script type="text/javascript" src="app:/js/util/base64.js" charset="utf-8"></script>
+		<script type="text/javascript" src="app:/js/util/jquery.js" charset="utf-8"></script>
+		<script type="text/javascript" src="app:/js/util/jquery.intercept-min.js"></script>
+		<script type="text/javascript" src="app:/js/util/json.js" charset="utf-8"></script>
+		<!-- /UTILITIES -->
+		
+		<!-- HELPERS -->
+		<script type="text/javascript" src="app:/js/tmsngr/config.js" charset="utf-8"></script>
+		<script type="text/javascript" src="app:/js/tmsngr/listeners.js" charset="utf-8"></script>
+		<script type="text/javascript" src="app:/js/tmsngr/locale.js" charset="utf-8"></script>
+		<script type="text/javascript" src="app:/js/tmsngr/services.js" charset="utf-8"></script>
+		<script type="text/javascript" src="app:/js/tmsngr/strings.js" charset="utf-8"></script>
+		<script type="text/javascript" src="app:/js/tmsngr/date.js" charset="utf-8"></script>
+		<script type="text/javascript" src="app:/js/tmsngr/parser.js" charset="utf-8"></script>
+		<script type="text/javascript" src="app:/js/tmsngr/db.js" charset="utf-8"></script>
+		<!-- /HELPERS -->
+		
+		<!-- CORE -->
+		<script type="text/javascript" src="app:/js/tmsngr/core/main.js" charset="utf-8"></script>
+		<script type="text/javascript" src="app:/js/tmsngr/core/callback.js" charset="utf-8"></script>
+		<script type="text/javascript" src="app:/js/tmsngr/core/ajax.js" charset="utf-8"></script>
+		<script type="text/javascript" src="app:/js/tmsngr/core/display.js" charset="utf-8"></script>
+		<script type="text/javascript" src="app:/js/tmsngr/core/open.js" charset="utf-8"></script>
+		<!-- / CORE -->
+		
+		<script type="text/javascript">
+			$(document).ready(function() {
+				TM.settings.load();
+				
+				// Obtengo el nombre de usuario e inicio la ventana
+				document.getElementById('twitterUser').value = TM.string.gup('id');
+				
+				$('body').keyup(function(e) {
+					// Si apreto ESC en la ventana de conversacion, cierro la ventana.
+					if (e.which == 27) {
+						window.nativeWindow.close();
+					}
+				});
+				
+				$('body').intercept('mousedown', {
+					'div': function() { window.nativeWindow.startMove(); },
+					'img': function() { window.nativeWindow.startMove(); },
+					'p': function() { window.nativeWindow.startMove(); },
+					'h1': function() { window.nativeWindow.startMove(); },
+					'h2': function() { window.nativeWindow.startMove(); },
+					'h3': function() { window.nativeWindow.startMove(); },
+					'span': function() { window.nativeWindow.startMove(); }
+				});
+				
+				$('body').intercept('click', {
+					'#btnCloseApp': function() { window.nativeWindow.close(); },
+					'#btnMinimizeApp': function() { window.nativeWindow.minimize(); }
+				});
+				
+				TM.services.twitter.contact_profile_info(TM.string.gup('id'));
+			});
+		</script>
+	</head>
+	<body>
+		<input type="hidden" id="twitterUser" />
+		<div id="logoBar">
+			<div class="fll" style="width: 150px">
+				<img src="app:/img/logo.png" alt="T-Messenger" />
+			</div>
+			<div class="flr tar pt3" style="width: 200px">
+				<img src="app:/img/loader-static.png" id="loader" alt="" /> &nbsp;
+				<img src="app:/img/btnMinimizeapp.png" class="button" id="btnMinimizeApp" alt="" /> 
+				<img src="app:/img/btnCloseapp.png" class="button" id="btnCloseApp" alt="" />
+			</div>
+			<div class="clb"></div>
+		</div>
+		<div id="profile_body">
+			<div class="p10 dn">
+				<div class="fll" style="width: 150px;">
+					<img id="userImage" style="width: 150px" />
+					<div style="background-color: #111">
+						<h3 class="p5" style="font-size: 11px">
+							Seguidores: <span id="followers"></span><br />
+							Amigos: <span id="friends"></span><br />
+							Atualizações: <span id="updates"></span><br />
+							Favoritos: <span id="favorites"></span><br />
+							<strong>¿Protegido? <span id="protected"></span></strong>
+						</h3>
+					</div>
+				</div>
+				<div class="fll ml10" style="width: 320px;">
+					<h1>Visualizar o perfil de <span id="nickname"></span>:</h1>
+					<h2 id="description" style="font-size: 11px"></h2>
+					<h3 class="pt20">
+						Nome: <span id="display_name"></span><br />
+						Localizado na: <span id="location"></span><br />
+						Fuso horário: <span id="time_zone"></span><br />
+						Última actualização: 
+						<div class="p5 mt5" style="border: 1px solid #333; -webkit-border-radius: 5px">
+							<span id="last_tweet_text"></span>
+							<br />
+							<span style="font-size: 11px">Feito em <span id="last_tweet_date"></span> com <span id="last_tweet_source"></span></span>
+						</div>
+					</h3>
+				</div>
+				<div class="clb"></div>
+			</div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,533 @@
+/** 
+ * Copyright (c) 2009, M. Andrés Pagella <andres.pagella@gmail.com>
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ * 3. All advertising materials mentioning features or use of this software
+ *    must display the following acknowledgement:
+ *    This product includes software developed by the <organization>.
+ * 4. Neither the name of the <organization> nor the
+ *    names of its contributors may be used to endorse or promote products
+ *    derived from this software without specific prior written permission.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY M. ANDRES PAGELLA ''AS IS'' AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL M. ANDRES PAGELLA BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+/**
+ * Custom CSS classes
+ */
+
+body { cursor: default; }
+.bodyContent { /* Index/IM Window */
+	background: transparent url(app:/img/main-bg.png) repeat top left;
+	border-right: 2px solid #CFD4DB;
+	border-left: 2px solid #CFD4DB;
+	overflow: auto;
+	position: fixed;
+	top: 30px;
+	left: 0;
+	right: 0;
+	bottom: 22px;
+	overflow: auto;
+}
+
+.bodyContent2 { /* Main Window */
+	background: transparent url(app:/img/main-bg.png) repeat top left;
+	border-right: 2px solid #CFD4DB;
+	border-left: 2px solid #CFD4DB;
+	overflow: auto;
+	position: fixed;
+	top: 98px;
+/*	top: 248px; */
+	left: 0;
+	right: 0;
+	bottom: 22px;
+	overflow: auto;
+}
+
+#profile_body { /* Profile information */
+	background: black;
+	overflow: auto;
+	position: fixed;
+	top: 30px;
+	left: 0;
+	right: 0;
+	bottom: 22px;
+	overflow: auto;
+	-webkit-border-bottom-left-radius: 10px;
+	-webkit-border-bottom-right-radius: 10px;
+	font-family: Helvetica, Arial, Tahoma, Sans-serif; 
+	color: white; 
+	letter-spacing: -0.2px;
+	font-size: 12px;
+}
+
+#profile_body h1 { 
+	font-family: Helvetica, Arial, Tahoma, Sans-serif; 
+	color: white; 
+	letter-spacing: -0.3px;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+#profile_body h1 span { 
+	font: inherit;
+	color: inherit;
+}
+
+#profile_body h2 { 
+	font-family: Helvetica, Arial, Tahoma, Sans-serif; 
+	color: white; 
+	letter-spacing: -0.3px;
+	font-size: 14px;
+}
+
+#profile_body h3 { 
+	font-family: Helvetica, Arial, Tahoma, Sans-serif; 
+	color: white; 
+	letter-spacing: -0.2px;
+	font-size: 12px;
+}
+
+#profile_body h3 span {
+	font: inherit;
+}
+
+a { text-decoration: none; }
+a:hover { text-decoration: none; }
+input { border: 1px solid #CCC; font-family: Helvetica, Arial, Tahoma, Sans-serif; color: #222; letter-spacing: -0.2px; font-size: 12px; padding: 3px; }
+
+.type { 
+	font-family: Helvetica, Arial, Tahoma, Sans-serif;
+	/*font-family: 'LucidaGrande';
+	src: url(LucidaGrande.ttf);*/
+	color: #222; 
+	letter-spacing: -0.2px; 
+}
+.shadow { background: transparent url(app:/img/shadow.png) repeat-x top left; }
+
+#logoBar {
+	background: black url(app:/img/bg-1.png) repeat-x top left;
+	padding: 5px;
+	-webkit-border-top-left-radius: 10px;
+	-webkit-border-top-right-radius: 10px;
+}
+
+#statusBar {
+	background: #F2F2F2 url(app:/img/bg-status.png) repeat-x top left;
+	height: 22px;
+	position: absolute;
+	width: 100%;
+	border: 1px solid #CCC;
+	text-align: right;
+	top: auto;
+	bottom: 0;
+	overflow: hidden;
+}
+
+.button { opacity: 0.6; MozOpacity: 0.6; KhtmlOpacity: 0.6; filter: alpha(opacity = 60); cursor: pointer; }
+.button:hover { opacity: 1.0; MozOpacity: 1.0; KhtmlOpacity: 1.0; filter: alpha(opacity = 100); }
+
+.button2 { 
+	font-family: Helvetica, Arial, Tahoma, Sans-serif; 
+	letter-spacing: -0.2px; 
+	font-size: 12px;
+	opacity: 0.6; 
+	MozOpacity: 0.6; 
+	KhtmlOpacity: 0.6; 
+	filter: alpha(opacity = 60); 
+	cursor: pointer; 
+	padding: 5px;
+	background: #F2F2F2 url(app:/img/bg-status.png) repeat-x top left;
+	border: 1px solid #CCC;
+	-webkit-border-radius: 3px;
+	color: #222;
+}
+
+.button2:hover { 
+	opacity: 1.0; 
+	MozOpacity: 1.0; 
+	KhtmlOpacity: 1.0; 
+	filter: alpha(opacity = 100); 
+}
+
+.button3 { 
+	font-family: Helvetica, Arial, Tahoma, Sans-serif; 
+	letter-spacing: -0.2px; 
+	font-size: 11px;
+	font-weight: bold;
+	opacity: 0.6; 
+	MozOpacity: 0.6; 
+	KhtmlOpacity: 0.6; 
+	filter: alpha(opacity = 60); 
+	cursor: pointer; 
+	padding: 3px;
+	background: #C8CFD7 url(app:/img/bg-3.png) repeat-x top left;
+	border: 1px solid #BBB;
+	-webkit-border-radius: 3px;
+	color: #212536;
+	margin: 3px;
+	text-align: center;
+}
+
+.button3:hover { 
+	opacity: 1.0; 
+	MozOpacity: 1.0; 
+	KhtmlOpacity: 1.0; 
+	filter: alpha(opacity = 100); 
+}
+
+#shortBar { background: #1C1E2A url(app:/img/bg-2.png) repeat-x top left; color: white; }
+#shortBar div {  
+	color: inherit;
+	font-family: Helvetica, Arial, Tahoma, Sans-serif; 
+	letter-spacing: -0.2px; 
+	font-size: 11px; 
+	margin-left: 5px;
+	margin-right: 5px;
+	font-weight: bold;
+	height: 34px;
+	text-align: center;
+}
+#shortBar div p { padding-top: 9px;	cursor: default; font-size: 11px; }
+#shortBar .active {
+	margin-top: 4px;
+	-moz-border-radius: 5px;
+	-webkit-border-top-left-radius: 3px;
+	-webkit-border-top-right-radius: 3px;
+	background-color: white;
+	height: 30px;
+}
+#shortBar .active p { color: #1F2130; padding-top: 7px; }
+
+.toolbar_options { 
+	background: #C8CFD7 url(app:/img/bg-3.png) repeat-x top left; 
+	border-bottom: 1px solid #AAA;
+	-webkit-border-top-left-radius: 3px;
+	-webkit-border-top-right-radius: 3px;
+}
+.toolbar_options ul { padding-top: 1px; }
+.toolbar_options li {
+	display: inline; 
+	padding: 5px;
+	font-family: Helvetica, Arial, Tahoma, Sans-serif; 
+	letter-spacing: -0.2px; 
+	font-size: 12px;
+	font-weight: bold;
+	color: black;
+}
+
+#tab1 { height: 100%; color: white; }
+
+#tab1_options ul li {
+	display: inline;
+	margin-left: 10px;
+	margin-bottom: 0px;
+	padding: 5px;
+	text-align: center;
+}
+
+#tab1_options ul li.active {
+	background-color: white;
+	-webkit-border-radius: 3px;
+	color: #3E4B63;
+	border: 1px solid #CCC;
+	-webkit-border-bottom-left-radius: 0px;
+	-webkit-border-bottom-right-radius: 0px;
+	border-bottom: 0px;
+}
+
+#tab1_options ul li .tab1_qty {
+	background-color: #CCC; 
+	-webkit-border-radius: 5px; 
+	padding: 1px; 
+	padding-left: 3px; 
+	padding-right: 3px; 
+	color: #333;
+	margin-left: 3px;
+}
+
+#tab1_options ul li.active .tab1_qty {
+	background-color: #333E5A; 
+	-webkit-border-radius: 5px; 
+	padding: 1px; 
+	padding-left: 3px; 
+	padding-right: 3px; 
+	color: white;
+}
+
+#tab1_options ul li span {
+	font-family: Helvetica, Arial, Tahoma, Sans-serif; 
+	letter-spacing: -0.2px; 
+	font-size: 11px;
+	font-weight: bold;
+	color: inherit;
+}
+
+
+
+/*#tab1_options ul li span .active_tool {
+	background-color: white;
+	-webkit-border-radius: 3px;
+	color: #3E4B63;
+}*/
+
+#tab1 .contact { 
+	margin: 20px;
+	padding: 5px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	margin-top: 4px;
+	background-color: white;
+	-webkit-border-radius: 3px;	
+}
+
+#tab1 .contact table {
+	width: 100%;
+} 
+
+#tab1 .contact table h1 {
+	font-family: Helvetica, Arial, Tahoma, Sans-serif; 
+	letter-spacing: -0.2px; 
+	font-size: 12px;
+	color: black;
+}
+
+#tab1 .contact table h2 {
+	font-family: Helvetica, Arial, Tahoma, Sans-serif; 
+	letter-spacing: -0.2px; 
+	font-size: 11px;
+	color: #666;
+	font-style: italic;
+}
+
+#tab1 .contact table h3 {
+	padding-top: 5px;
+	font-family: Helvetica, Arial, Tahoma, Sans-serif; 
+	letter-spacing: -0.2px; 
+	font-size: 12px;
+	color: #000;
+}
+
+#tab1 .contact table h4 {
+	padding-top: 5px;
+	font-family: Helvetica, Arial, Tahoma, Sans-serif; 
+	letter-spacing: -0.2px; 
+	font-size: 11px;
+	color: #666;
+	font-style: italic;
+}
+
+#tab2 .tweetlist { 
+	margin: 20px;
+	margin-top: 10px;
+}
+
+#tab3 .mentions {
+	margin: 20px;
+	margin-top: 10px;
+}
+
+.pic div {
+	padding-top: 5px;
+	padding-bottom: 5px;
+	text-align: center;
+	background-color: white;
+	-webkit-border-top-left-radius: 5px;
+	-webkit-border-bottom-left-radius: 5px;
+}
+
+.pic div img { width: 50px; }
+
+.tweet {
+/*	padding-top: 5px;
+	padding-bottom: 5px;*/
+	padding: 10px;
+	padding-top: 0px;
+	text-align: left;
+	background: white url(app:/img/tweetBG.png) repeat-x bottom left;
+	-webkit-border-top-right-radius: 5px;
+	-webkit-border-bottom-right-radius: 5px;
+	-webkit-border-bottom-left-radius: 5px;
+}
+
+.tweet h2 {
+	font-family: Helvetica, Arial, Tahoma, Sans-serif;
+	letter-spacing: -0.2px; 
+	font-size: 14px;
+	color: black;
+}
+
+.tweet h2 a {
+	font-family: Helvetica, Arial, Tahoma, Sans-serif; 
+	letter-spacing: -0.2px; 
+	font-size: 14px;
+	color: #666;
+	text-decoration: underline;
+}
+
+.tweet h2 a:hover { color: #305294; } 
+
+.tweet .src {
+	font-family: Helvetica, Arial, Tahoma, Sans-serif; 
+	letter-spacing: -0.2px; 
+	font-size: 11px;
+	color: #666;
+}
+
+.tweet .nick {
+	font-weight: bold;
+	color: #305294;
+}
+
+.tweet .twitter_user {
+	cursor: pointer;
+	color: #305294;
+}
+
+.textingArea {
+	background: #C8CFD7 url(app:/img/bg-3.png) repeat-x top left; 
+	padding: 10px;
+	border-left: 1px solid #FFF;
+	border-top: 1px solid #FFF;
+	border-bottom: 1px solid #646977;
+	border-right: 1px solid #646977;
+/*	position: absolute;
+	top: 98px;*/
+	left: 0;
+	right: 0;
+}
+
+.textingArea2 {
+	background: #C8CFD7 url(app:/img/bg-3.png) repeat-x top left; 
+	padding: 10px;
+	padding-top: 0px;
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: auto;
+	bottom: 0;
+	height: 120px;
+	overflow: hidden;
+}
+
+.textingArea .inptText, .textingArea2 .inptText {
+	width: 98%;
+	height: 50px;
+	padding: 3px;
+	font-family: Helvetica, Arial, Tahoma, Sans-serif; 
+	letter-spacing: -0.2px; 
+	font-size: 12px;
+	color: #000;
+	border-top: 1px solid #AAA;
+	border-left: 1px solid #AAA;
+	border-bottom: 1px solid #CCC;
+	border-right: 1px solid #CCC;	
+	-webkit-border-radius: 5px;
+}
+
+.textingArea .multi, .textingArea2 .multi {
+	background: transparent url(app:/img/multi.png) no-repeat bottom right;
+}
+
+.textingArea .picLoading, .textingArea2 .picLoading {
+	background: transparent url(app:/img/loader2.gif) no-repeat bottom right;
+}
+
+.tweet .tools {
+	background-color: white; 
+	position: absolute; 
+	bottom: 0px;
+	right: 0px;
+	background: #F2F2F2 url(app:/img/bg-status.png) repeat-x top left;
+	padding: 3px;
+	border: 1px solid #CCC;
+	-webkit-border-radius: 3px;
+}
+
+.friend_extended_view .tools {
+	background-color: white; 
+	position: absolute; 
+	bottom: 3px;
+	right: 3px;
+	background: #F2F2F2 url(app:/img/bg-status.png) repeat-x top left;
+	padding: 3px;
+	border: 1px solid #CCC;
+	-webkit-border-radius: 3px;
+}
+
+#settings_page h1 {
+	font-family: Helvetica, Arial, Tahoma, Sans-serif;
+	letter-spacing: -0.2px; 
+	font-size: 14px;
+	font-weight: bold;
+	color: #222;
+}
+
+#settings_page table { width: 100%; }
+#settings_page table td { padding: 10px; border-bottom: 1px solid #CCC; }
+#settings_page table td .title { 
+	font-family: Helvetica, Arial, Tahoma, Sans-serif;
+	letter-spacing: -0.2px; 
+	font-size: 12px;
+	font-weight: bold;
+	color: #222;
+}
+
+#settings_page table td .description { 
+	font-family: Helvetica, Arial, Tahoma, Sans-serif;
+	letter-spacing: -0.2px; 
+	font-size: 12px;
+	color: #222;
+}
+
+#groups_page h1 {
+	font-family: Helvetica, Arial, Tahoma, Sans-serif;
+	letter-spacing: -0.2px; 
+	font-size: 14px;
+	font-weight: bold;
+	color: #222;
+}
+
+#groups_page table { width: 100%; }
+#groups_page table td .title { 
+	font-family: Helvetica, Arial, Tahoma, Sans-serif;
+	letter-spacing: -0.2px; 
+	font-size: 12px;
+	font-weight: bold;
+	color: #222;
+}
+
+#groups_page table td .description { 
+	font-family: Helvetica, Arial, Tahoma, Sans-serif;
+	letter-spacing: -0.2px; 
+	font-size: 12px;
+	color: #222;
+}
+
+#groups_page .contact { 
+	cursor: pointer;
+}
+
+#groups_page .selected { 
+	background-color: #3D80DF;
+}
+
+#groups_page .selected .description { 
+	color: white;
+}
